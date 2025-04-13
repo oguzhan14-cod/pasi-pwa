@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>PASI Skor Hesaplayıcı</title>
+</head>
+<body>
+    <h2>PASI Skor Hesaplayıcı</h2>
+
+    <form id="pasiForm">
+        <h3>Baş (10%)</h3>
+        Eritem: <input type="number" id="head_ery" min="0" max="4"><br>
+        İndürasyon: <input type="number" id="head_thick" min="0" max="4"><br>
+        Deskvamasyon: <input type="number" id="head_scale" min="0" max="4"><br>
+        Alan (0-6): <input type="number" id="head_area" min="0" max="6"><br>
+
+        <h3>Üst Ekstremite (20%)</h3>
+        Eritem: <input type="number" id="arms_ery" min="0" max="4"><br>
+        İndürasyon: <input type="number" id="arms_thick" min="0" max="4"><br>
+        Deskvamasyon: <input type="number" id="arms_scale" min="0" max="4"><br>
+        Alan (0-6): <input type="number" id="arms_area" min="0" max="6"><br>
+
+        <h3>Gövde (30%)</h3>
+        Eritem: <input type="number" id="trunk_ery" min="0" max="4"><br>
+        İndürasyon: <input type="number" id="trunk_thick" min="0" max="4"><br>
+        Deskvamasyon: <input type="number" id="trunk_scale" min="0" max="4"><br>
+        Alan (0-6): <input type="number" id="trunk_area" min="0" max="6"><br>
+
+        <h3>Alt Ekstremite (40%)</h3>
+        Eritem: <input type="number" id="legs_ery" min="0" max="4"><br>
+        İndürasyon: <input type="number" id="legs_thick" min="0" max="4"><br>
+        Deskvamasyon: <input type="number" id="legs_scale" min="0" max="4"><br>
+        Alan (0-6): <input type="number" id="legs_area" min="0" max="6"><br>
+
+        <br>
+        <button type="button" onclick="calculatePASI()">Hesapla</button>
+    </form>
+
+    <h3 id="result"></h3>
+
+    <script>
+        function calculateRegionScore(ery, thick, scale, area, weight) {
+            return ((ery + thick + scale) * area) * weight;
+        }
+
+        function calculatePASI() {
+            const head = calculateRegionScore(
+                parseInt(document.getElementById("head_ery").value || 0),
+                parseInt(document.getElementById("head_thick").value || 0),
+                parseInt(document.getElementById("head_scale").value || 0),
+                parseInt(document.getElementById("head_area").value || 0),
+                0.1
+            );
+
+            const arms = calculateRegionScore(
+                parseInt(document.getElementById("arms_ery").value || 0),
+                parseInt(document.getElementById("arms_thick").value || 0),
+                parseInt(document.getElementById("arms_scale").value || 0),
+                parseInt(document.getElementById("arms_area").value || 0),
+                0.2
+            );
+
+            const trunk = calculateRegionScore(
+                parseInt(document.getElementById("trunk_ery").value || 0),
+                parseInt(document.getElementById("trunk_thick").value || 0),
+                parseInt(document.getElementById("trunk_scale").value || 0),
+                parseInt(document.getElementById("trunk_area").value || 0),
+                0.3
+            );
+
+            const legs = calculateRegionScore(
+                parseInt(document.getElementById("legs_ery").value || 0),
+                parseInt(document.getElementById("legs_thick").value || 0),
+                parseInt(document.getElementById("legs_scale").value || 0),
+                parseInt(document.getElementById("legs_area").value || 0),
+                0.4
+            );
+
+            const pasiScore = (head + arms + trunk + legs).toFixed(2);
+
+            document.getElementById("result").innerText = "PASI Skoru: " + pasiScore;
+        }
+    </script
+</body>
+</html>
